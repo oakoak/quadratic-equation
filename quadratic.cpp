@@ -50,6 +50,17 @@ int quadratic( double a, double b, double c, char* n, double* x1, double* x2)
     return 0;
 }
 
+int check_values (double a, double b, double c, char n, double x1, double x2)
+{
+    if (((n == 1) || (n == 2)) && ( a*x1*x1 + b*x1 + c != 0 ))
+        return 1;
+
+    if ((n == 2) && ( a*x2*x2 + b*x2 + c != 0 ))
+        return 1;
+    return 0;
+}
+
+
 int print_roots (char n, double x1, double x2)
 {
     if (n == 0)
@@ -69,11 +80,13 @@ int print_roots (char n, double x1, double x2)
 int main()
 {
     double a = 0, b = 0, c = 0;
-    printf("enter values a,b,c\n");
+    printf("Enter values a, b, c\n");
     scanf("%lg%lg%lg", &a, &b, &c);
     double x1 = 0,x2 = 0;
     char n = 0;
     quadratic(a, b, c, &n, &x1, &x2);
+    if (check_values(a, b, c, n, x1, x2) != 0)
+    printf("Roots do not correspond to reality\n\n");
     print_roots(n, x1, x2);
     return 0;
 }
