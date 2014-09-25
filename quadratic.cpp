@@ -79,16 +79,3 @@ int print_roots (char n, double x1, double x2)
 
     return 0;
 }
-
-int main()
-{
-    double a = 0, b = 0, c = 0;
-    printf("Enter values a, b, c\n");
-    scanf("%lg%lg%lg", &a, &b, &c);
-    double x1 = 0,x2 = 0;
-    char n = 0;
-    quadratic(a, b, c, &n, &x1, &x2);
-    print_roots(n, x1, x2);
-    check_values(a, b, c, n, x1, x2);
-    return 0;
-}
