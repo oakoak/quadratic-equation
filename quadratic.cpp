@@ -1,81 +1,76 @@
-#include <stdio.h>
-#include <math.h>
+#include "quadraticLib.h"
 
-#define no_roots 0
-#define one_root 1
-#define two_roots 2
-#define infinitely_roots -1
 
-int quadratic( double a, double b, double c, char* n, double* x1, double* x2)
+int quadratic( double coefficients_equation[], double root_equation[])
 {
-    if ((a == 0) && (b == 0) && (c == 0))
-    {
-        *n = infinitely_roots;
-        return 0;
-    }
+    if((coefficients_equation[2] == 0) && (coefficients_equation[1] == 0) && (coefficients_equation[0] == 0))
+                {
+                root_equation[0] = 3;
+                return 0;
+                }
 
-    if ((a == 0) && (b == 0))
-    {
-        *n = no_roots;
+    if ((coefficients_equation[2] == 0) && (coefficients_equation[1] == 0))
+        {
+        root_equation[0] = NO_ROOTS;
         return 0;
-    }
+        }
 
-    if (a == 0)
-    {
-        *n = one_root;
-        *x1 = -c/b;
+    if (coefficients_equation[2] == 0)
+        {
+        root_equation[0] = ONE_ROOT;
+        root_equation[1] = -coefficients_equation[0]/coefficients_equation[1];
         return 0;
-    }
+        }
 
     double discriminant = 0;
-    discriminant = b*b - 4*a*c;
+    discriminant = coefficients_equation[1]*coefficients_equation[1] - 4*coefficients_equation[2]*coefficients_equation[0];
     if (discriminant < 0)
     {
-        *n = no_roots;
+        root_equation[0] = NO_ROOTS;
     }
     else
     {
         if (discriminant == 0)
         {
-            *n = one_root;
-            *x1 =  -b/(2*a);
+            root_equation[0] = ONE_ROOT;
+            root_equation[1] =  -coefficients_equation[1]/(2*coefficients_equation[2]);
         }
         else
         {
-            *n = two_roots;
+            root_equation[0] = TWO_ROOTS;
             discriminant = sqrt(discriminant);
-            *x1 = ( -b - discriminant) / (2*a);
-            *x2 = ( -b + discriminant) / (2*a);
+            root_equation[1] = ( -coefficients_equation[1] - discriminant) / (2*coefficients_equation[2]);
+            root_equation[2] = ( -coefficients_equation[1] + discriminant) / (2*coefficients_equation[2]);
         }
     }
-
     return 0;
 }
 
-int check_values (double a, double b, double c, char n, double x1, double x2)
+int check_values (double coefficients_equation[], double root_equation[])
 {
-    if (((n == one_root) || (n == two_roots)) && ( a*x1*x1 + b*x1 + c != 0 ))
-        printf("root x1 is not correct");
+    if (((root_equation[0] == 1) || (root_equation[0] == 2)) && ( coefficients_equation[2]*root_equation[1]*root_equation[1] + coefficients_equation[1]*root_equation[1] + coefficients_equation[0] != 0 ))
+        printf("Warning: Root x1 incorrect");
 
-    if ((n == two_roots) && ( a*x2*x2 + b*x2 + c != 0 ))
-        printf("root x2 is not correct");
+    if ((root_equation[0] == 2) && ( coefficients_equation[2]*root_equation[2]*root_equation[2] + coefficients_equation[1]*root_equation[2] + coefficients_equation[0] != 0 ))
+        printf("Warning: Root x2 incorrect");
     return 0;
 }
 
 
-int print_roots (char n, double x1, double x2)
+int print_roots (double coefficients_equation [], double root_equation[])
 {
-    if (n == no_roots)
-        printf("No roots\n");
+    if (root_equation[0] == NO_ROOTS)
+        printf("No radicals\n");
 
-    if (n == infinitely_roots)
+    if (root_equation[0] == INFINITELY_ROOTS)
         printf("Infinitely roots\n");
 
-    if (n == one_root)
-        printf("One root: %lg\n", x1);
+    if (root_equation[0] == ONE_ROOT)
+        printf("One root: %lg\n", root_equation[1]);
 
-    if (n == two_roots)
-        printf("Two root: %lg, %lg\n", x1, x2);
+    if (root_equation[0] == TWO_ROOTS)
+        printf("Two root: %lg, %lg\n", root_equation[1], root_equation[2]);
 
+    check_values(coefficients_equation, root_equation);
     return 0;
 }
