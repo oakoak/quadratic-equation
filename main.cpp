@@ -1,13 +1,13 @@
-#include "quadratic.cpp"
+#include "quadraticLib.h"
 
 int main()
 {
-    double a = 0, b = 0, c = 0;
-    double x1 = 0,x2 = 0;
-    char n = 0;
-    read ( a, b, c );
-    quadratic(a, b, c, n, x1, x2);
-    print_roots(n, x1, x2);
-    check_values(a, b, c, n, x1, x2);
+    const int n = 3;
+    double coefficients_equation[n];
+    double root_equation[n];
+    printf("Enter values a, b, c\n");
+    scanf( "%lg%lg%lg" , &coefficients_equation[2], &coefficients_equation[1], &coefficients_equation[0] );
+    quadratic(coefficients_equation, root_equation);
+    print_roots(coefficients_equation, root_equation);
     return 0;
 }
